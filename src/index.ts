@@ -6,6 +6,11 @@ const default_options: IOptions = {
     directories: ['node_modules', 'web_modules']
 };
 
+/**
+ * 
+ * @param package_name The name of the package to locate
+ * @param options Customise the search options
+ */
 export function moduleSearch(package_name: string, options?: IOptions): string | null {
 
     // use default options where the user has not specified any
