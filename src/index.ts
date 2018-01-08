@@ -47,7 +47,7 @@ export function getPackageJson(package_name: string, options?: IOptions): any | 
     const module_directory = getModulePath(package_name, options);
 
     // if no match is found then return null
-    if (module_directory) {
+    if (!module_directory) {
         return null;
     }
 
