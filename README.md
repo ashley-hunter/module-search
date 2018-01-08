@@ -1,6 +1,20 @@
 # Module Search
 
-Module Search is a simple utility library to assist in locating a module. The following function is exported:
+Module Search is a simple utility library to assist in locating a module. 
+
+### Installation
+
+Install simply by using:
+
+`npm install module-search --save-dev` 
+
+or
+
+`yarn add module-search --dev`
+
+### Usage
+
+The following function is exported:
 
 `moduleSearch(packageName, options)`
 
