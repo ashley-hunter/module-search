@@ -65,15 +65,16 @@ export function getPackageJson(package_name: string, options?: IOptions): any | 
 
 export function getPackageMain(package_name: string, options?: IOptions): string | null {
     
+    const module_directory = getModulePath(package_name, options);
     const pkg = getPackageJson(package_name, options);
 
     // if module was not found or has no main field then stop here
-    if (!pkg || !pkg.main) {
+    if (!module_directory || !pkg || !pkg.main) {
         return null;
     }
 
     // otherwise locate the main file
-    return pkg.main;
+    return join(module_directory, pkg.main);
 }
 
 export interface IOptions {
