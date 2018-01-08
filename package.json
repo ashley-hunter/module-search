@@ -1,12 +1,15 @@
 {
   "name": "module-search",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A simple utility library for locating the directory of a module",
   "main": "dist/index.js",
   "repository": "https://github.com/ashley-hunter/module-search.git",
   "author": "Ashley Hunter",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "prepublish": "tsc"
+  },
   "files": [
     "./dist/**"
   ],
