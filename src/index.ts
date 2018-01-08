@@ -1,5 +1,5 @@
 import { join, resolve } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 
 const default_options: IOptions = {
     cwd: process.cwd(),
@@ -11,7 +11,7 @@ const default_options: IOptions = {
  * @param package_name The name of the package to locate
  * @param options Customise the search options
  */
-export function moduleSearch(package_name: string, options?: IOptions): string | null {
+export function getModulePath(package_name: string, options?: IOptions): string | null {
 
     // use default options where the user has not specified any
     options = Object.assign({}, default_options, options);
@@ -39,7 +39,41 @@ export function moduleSearch(package_name: string, options?: IOptions): string |
     options!.cwd = parent_directory;
 
     // otherwise call this function in parent folder
-    return moduleSearch(package_name, options);
+    return getModulePath(package_name, options);
+}
+
+export function getPackageJson(package_name: string, options?: IOptions): any | null {
+
+    const module_directory = getModulePath(package_name, options);
+
+    // if no match is found then return null
+    if (module_directory) {
+        return null;
+    }
+
+    // if found then read the package.json file
+    const package_path = resolve(module_directory!, 'package.json');
+
+    // ensure the package.json file exists (although it would be odd if it didn't)
+    if (!existsSync(package_path)) {
+        return null;
+    }
+
+    // read the package.json file
+    return require(package_path);
+}
+
+export function getPackageMain(package_name: string, options?: IOptions): string | null {
+    
+    const pkg = getPackageJson(package_name, options);
+
+    // if module was not found or has no main field then stop here
+    if (!pkg || !pkg.main) {
+        return null;
+    }
+
+    // otherwise locate the main file
+    return pkg.main;
 }
 
 export interface IOptions {
